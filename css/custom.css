@@ -1,0 +1,209 @@
+/* ==========================================================================
+   «Потік монет» — окремий файл користувацьких стилів.
+   Основна стилізація зроблена класами Tailwind CSS (підключений через CDN
+   у index.html, тема — у tailwind.config там же). Тут лише те, що неможливо
+   або незручно виразити утилітами: псевдоелементи повзунка й <progress>,
+   conic-gradient, маски, значок «+ / −» в акордеоні, глобальний фокус.
+   ========================================================================== */
+
+:root {
+  --accent: #00f5c4;
+  --track: rgba(255, 255, 255, 0.14);
+  --glow: 0 4px 12px rgba(0, 245, 196, 0.4);
+  --range-track-height: 6px;
+  --range-thumb-size: 22px;
+  --donut-ring-width: 0.8rem;
+
+  /* Вбудовані медіа (ЛР №7): значення читають утиліти max-w-video, rounded-map, shadow-map тощо */
+  --video-max-width: 56rem;
+  --video-radius: 1.5rem;
+  --video-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --map-max-width: 56rem;
+  --map-height: clamp(16rem, 36vw, 21rem);
+  --map-radius: 1.5rem;
+  --map-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Помітний фокус для клавіатурної навігації (WCAG 2.2) */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Користувачі з увімкненим «зменшенням руху» */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Ореоли фону секцій */
+.hero-glow {
+  background:
+    radial-gradient(60% 45% at 50% 0%, rgba(0, 245, 196, 0.1), transparent 70%),
+    radial-gradient(35% 35% at 92% 38%, rgba(0, 245, 196, 0.06), transparent 70%);
+}
+
+.cta-glow {
+  background:
+    radial-gradient(55% 90% at 50% 120%, rgba(0, 245, 196, 0.22), transparent 70%),
+    radial-gradient(40% 60% at 85% -10%, rgba(0, 245, 196, 0.1), transparent 70%);
+  box-shadow: 0 0 60px rgba(0, 245, 196, 0.08);
+}
+
+.benefits-glow {
+  background: radial-gradient(45% 55% at 88% 55%, rgba(0, 245, 196, 0.09), transparent 70%);
+}
+
+/* Повзунок симулятора (--fill виставляє js/main.js) */
+.range {
+  --fill: 20%;
+  height: 1.75rem;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.range:focus-visible {
+  outline: none;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: var(--range-track-height);
+  background: linear-gradient(to right, var(--accent) var(--fill), var(--track) var(--fill));
+  border-radius: 999px;
+}
+
+.range::-moz-range-track {
+  height: var(--range-track-height);
+  background: var(--track);
+  border-radius: 999px;
+}
+
+.range::-moz-range-progress {
+  height: var(--range-track-height);
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.range::-webkit-slider-thumb {
+  width: var(--range-thumb-size);
+  height: var(--range-thumb-size);
+  margin-top: calc((var(--range-track-height) - var(--range-thumb-size)) / 2);
+  background: var(--accent);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: var(--glow);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.range::-moz-range-thumb {
+  width: var(--range-thumb-size);
+  height: var(--range-thumb-size);
+  background: var(--accent);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: var(--glow);
+}
+
+.range:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.range:focus-visible::-moz-range-thumb {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Ілюстрація панелі результату: плавне зникнення по двох осях */
+.result-art {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  object-position: 84% 60%;
+  -webkit-mask-image: linear-gradient(to right, transparent 10%, #000 55%),
+    linear-gradient(to bottom, transparent 0%, #000 45%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 10%, #000 55%),
+    linear-gradient(to bottom, transparent 0%, #000 45%);
+  mask-composite: intersect;
+}
+
+/* Діаграма бюджету: 22 000 / 2 000 / 6 000 з 30 000 ₴ */
+.donut {
+  background: conic-gradient(#00f5c4 0 73.33%, #fff 0 80%, #94a3b8 0 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--donut-ring-width)), #000 calc(100% - var(--donut-ring-width) + 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - var(--donut-ring-width)), #000 calc(100% - var(--donut-ring-width) + 1px));
+}
+
+/* Індикатор прогресу цілі */
+.goal-progress {
+  height: 0.5rem;
+  overflow: hidden;
+  background: var(--track);
+  border: 0;
+  border-radius: 999px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.goal-progress::-webkit-progress-bar {
+  background: var(--track);
+}
+
+.goal-progress::-webkit-progress-value {
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.goal-progress::-moz-progress-bar {
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+/* Акордеон: «+» / «−» малюється градієнтами */
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::after {
+  content: "";
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--accent);
+  background:
+    linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+  transition: background-size 250ms ease;
+}
+
+details[open] > .faq-question::after {
+  background-size:
+    100% 2px,
+    2px 0;
+}
+
+/* Мобільна версія панелі результату: ілюстрація знизу */
+@media (max-width: 560px) {
+  .result-art {
+    height: 48%;
+    object-position: 78% 70%;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 5%, #000 55%);
+    mask-image: linear-gradient(to bottom, transparent 5%, #000 55%);
+  }
+}
