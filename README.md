@@ -7,20 +7,22 @@
 
 - GitHub Pages: https://olehdrapakpp2025-cloud.github.io/potik-monet/
 - Netlify: https://potikmonet.netlify.app/
+- Vercel: https://potik-monet.vercel.app/
 
 ## Можливості
 
 - симулятор заощаджень: сума 0–10 000 ₴ і термін 6 / 12 / 24 місяці;
 - інформер з офіційними курсами НБУ (USD, EUR, PLN);
 - вбудовані відео YouTube і карта Google Maps;
+- форма зворотного зв'язку з клієнтською валідацією (RegEx, +380XXXXXXXXX) і модальним вікном;
 - адаптивна верстка від 320 до 1440 px (mobile first), темна тема.
 
 ## Технології
 
 - HTML5 (семантична розмітка)
 - Tailwind CSS 3 (CDN) + власні стилі в `css/custom.css`
-- JavaScript без бібліотек (`js/main.js`)
-- хостинг: GitHub Pages і Netlify
+- JavaScript без бібліотек (`js/main.js`, `js/validation.js`)
+- хостинг: GitHub Pages, Netlify і Vercel (автодеплой з гілки main)
 
 ## Структура
 
@@ -28,6 +30,7 @@
 index.html        — сторінка лендингу, підключення Tailwind CDN і tailwind.config
 css/custom.css    — стилі, яких немає в Tailwind (повзунок, діаграма, маски)
 js/main.js        — симулятор, мобільне меню, інформер курсів НБУ
+js/validation.js  — валідація форми зворотного зв'язку, UI-стани, модальне вікно
 assets/           — логотип, іконки, зображення
 netlify.toml      — налаштування Netlify (публікація з кореня, без збірки)
 ```
@@ -42,4 +45,5 @@ netlify.toml      — налаштування Netlify (публікація з 
 - ЛР №6 — Tailwind CSS, компоненти, адаптивність
 - ЛР №7 — повноцінний лендинг: відео, карта, інформер
 - ЛР №8 — Git, GitHub, деплой на GitHub Pages і Netlify
+- ЛР №9 — форма зворотного зв'язку, валідація RegEx + JavaScript, деплой на Vercel
 - Автор: Драпак О.Р., ст. гр. ПП-21
