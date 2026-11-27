@@ -47,6 +47,11 @@
       referrerpolicy="no-referrer"
     />
 
+    <!-- ЛР №10: CSS плагінів через CDN jsDelivr — у <head>, щоб слайдер і галерея не «стрибали» до ініціалізації (FOUC) -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
     <!-- 1) Tailwind CSS: підключення через CDN (Play CDN, Tailwind v3) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 2) Налаштування теми Tailwind: дизайн-система ЛР №4 (кольори, шрифти, розміри) -->
@@ -198,6 +203,11 @@
               Твої гроші. Твій спокій. Твій потік.
             </p>
             <h1 class="font-heading max-w-[24ch] text-hero font-semibold" id="hero-title">Керуй бюджетом легко</h1>
+            <!-- ЛР №10: Typed.js. Скрінрідер читає статичний текст, анімований рядок прихований від нього -->
+            <p class="font-heading min-h-[1.6em] text-[clamp(1.25rem,1rem+1.2vw,1.75rem)] font-medium">
+              <span class="sr-only">Відкладай на відпустку, новий ноутбук, подушку безпеки або навчання.</span>
+              <span aria-hidden="true">Відкладай на <span class="text-accent" id="typed-goal">відпустку мрії</span></span>
+            </p>
             <p class="max-w-[40rem] text-lg text-ink-muted">
               Знайди баланс між сьогоднішніми бажаннями й завтрашніми цілями. Плануй витрати й
               заощаджуй у власному темпі — крок за кроком.
@@ -354,6 +364,76 @@
       </section>
 
       <!-- КОМПОНЕНТ: Video (адаптивний YouTube-ембеддинг) -->
+      <!-- КОМПОНЕНТ: Галерея інтерфейсу (ЛР №10, Fancybox v5). Усі посилання з data-fancybox="potik-gallery" — один альбом -->
+      <section class="pb-section" id="galereia" aria-labelledby="gallery-title">
+        <div class="mx-auto w-full max-w-page px-[clamp(1rem,0.4rem+3vw,2rem)] flex flex-col gap-10">
+          <header class="flex flex-col items-start gap-4 md:flex-row md:items-end md:justify-between">
+            <div class="flex flex-col items-start gap-4">
+              <p class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent before:size-[0.4rem] before:flex-none before:rounded-full before:bg-accent before:content-['']">Галерея інтерфейсу</p>
+              <h2 class="font-heading font-semibold tracking-[-0.01em] max-w-[22ch] text-section max-md:max-w-none" id="gallery-title">Як виглядає «Потік монет»</h2>
+            </div>
+            <p class="max-w-[26rem] text-ink-muted">Знімки екранів цього лендингу. Натисни на картку, щоб відкрити альбом: гортай, збільшуй, на телефоні — свайпом.</p>
+          </header>
+
+          <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3" role="list">
+            <li>
+              <a class="group block overflow-hidden rounded-2xl border border-white/10 bg-inset transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" href="assets/gallery/simulator-default.webp" data-fancybox="potik-gallery" data-caption="Симулятор: 2 000 ₴ щомісяця → 24 000 ₴ за рік">
+                <span class="relative block aspect-[16/10] overflow-hidden">
+                  <img class="size-full object-cover object-top transition duration-500 group-hover:scale-[1.04]" src="assets/gallery/simulator-default-thumb.webp" alt="Симулятор заощаджень: 2 000 гривень щомісяця, 24 000 гривень за 12 місяців" width="640" height="400" loading="lazy" decoding="async" />
+                  <span class="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-page/80 text-accent opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                </span>
+                <span class="block px-5 py-4 text-sm text-ink-muted">Симулятор заощаджень</span>
+              </a>
+            </li>
+            <li>
+              <a class="group block overflow-hidden rounded-2xl border border-white/10 bg-inset transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" href="assets/gallery/simulator-5000.webp" data-fancybox="potik-gallery" data-caption="Повзунок на 5 000 ₴ — результат оновлюється одразу">
+                <span class="relative block aspect-[16/10] overflow-hidden">
+                  <img class="size-full object-cover object-top transition duration-500 group-hover:scale-[1.04]" src="assets/gallery/simulator-5000-thumb.webp" alt="Симулятор із сумою 5 000 гривень на місяць і результатом 60 000 гривень" width="640" height="400" loading="lazy" decoding="async" />
+                  <span class="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-page/80 text-accent opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                </span>
+                <span class="block px-5 py-4 text-sm text-ink-muted">Миттєвий перерахунок</span>
+              </a>
+            </li>
+            <li>
+              <a class="group block overflow-hidden rounded-2xl border border-white/10 bg-inset transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" href="assets/gallery/how-it-works.webp" data-fancybox="potik-gallery" data-caption="Три прості кроки: бачиш картину, налаштовуєш, заощаджуєш">
+                <span class="relative block aspect-[16/10] overflow-hidden">
+                  <img class="size-full object-cover object-top transition duration-500 group-hover:scale-[1.04]" src="assets/gallery/how-it-works-thumb.webp" alt="Розділ «Як це працює» з трьома картками кроків" width="640" height="400" loading="lazy" decoding="async" />
+                  <span class="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-page/80 text-accent opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                </span>
+                <span class="block px-5 py-4 text-sm text-ink-muted">Як це працює</span>
+              </a>
+            </li>
+            <li>
+              <a class="group block overflow-hidden rounded-2xl border border-white/10 bg-inset transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" href="assets/gallery/nbu-rates.webp" data-fancybox="potik-gallery" data-caption="Інформер з офіційними курсами НБУ та еквівалентом плану у валюті">
+                <span class="relative block aspect-[16/10] overflow-hidden">
+                  <img class="size-full object-cover object-top transition duration-500 group-hover:scale-[1.04]" src="assets/gallery/nbu-rates-thumb.webp" alt="Інформер «Офіційний курс НБУ» з курсами долара, євро та злотого" width="640" height="400" loading="lazy" decoding="async" />
+                  <span class="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-page/80 text-accent opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                </span>
+                <span class="block px-5 py-4 text-sm text-ink-muted">Курси НБУ</span>
+              </a>
+            </li>
+            <li>
+              <a class="group block overflow-hidden rounded-2xl border border-white/10 bg-inset transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" href="assets/gallery/feedback-form.webp" data-fancybox="potik-gallery" data-caption="Форма зворотного зв’язку зі станами валідації (ЛР №9)">
+                <span class="relative block aspect-[16/10] overflow-hidden">
+                  <img class="size-full object-cover object-top transition duration-500 group-hover:scale-[1.04]" src="assets/gallery/feedback-form-thumb.webp" alt="Форма «Напиши нам» з зеленими й червоними станами полів" width="640" height="400" loading="lazy" decoding="async" />
+                  <span class="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-page/80 text-accent opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                </span>
+                <span class="block px-5 py-4 text-sm text-ink-muted">Форма зворотного зв’язку</span>
+              </a>
+            </li>
+            <li>
+              <a class="group block overflow-hidden rounded-2xl border border-white/10 bg-inset transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" href="assets/gallery/simulator-mobile.webp" data-fancybox="potik-gallery" data-caption="Мобільна версія: симулятор на екрані 390 px">
+                <span class="relative block aspect-[16/10] overflow-hidden">
+                  <img class="size-full object-cover object-top transition duration-500 group-hover:scale-[1.04]" src="assets/gallery/simulator-mobile-thumb.webp" alt="Симулятор заощаджень на мобільному екрані" width="640" height="400" loading="lazy" decoding="async" />
+                  <span class="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-page/80 text-accent opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                </span>
+                <span class="block px-5 py-4 text-sm text-ink-muted">Мобільна версія</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <section class="py-section" id="video" aria-labelledby="video-title">
         <div class="mx-auto w-full max-w-page px-[clamp(1rem,0.4rem+3vw,2rem)] flex flex-col items-center gap-10">
           <header class="flex flex-col items-center gap-4 text-center">
@@ -557,6 +637,90 @@
           <p class="mt-8 text-center text-xs text-ink-muted">
             Відгуків користувачів поки немає: сервіс на стадії концепції. Блок із реальними відгуками з’явиться після запуску.
           </p>
+        </div>
+      </section>
+
+      <!-- КОМПОНЕНТ: Відгуки (ЛР №10, Swiper.js 11). Ініціалізація — js/plugins.js -->
+      <section class="reviews-section pb-section" id="vidguky" aria-labelledby="reviews-title">
+        <div class="mx-auto w-full max-w-page px-[clamp(1rem,0.4rem+3vw,2rem)] flex flex-col gap-10">
+          <header class="flex flex-col items-center gap-4 text-center">
+            <p class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent before:size-[0.4rem] before:flex-none before:rounded-full before:bg-accent before:content-['']">Відгуки</p>
+            <h2 class="font-heading font-semibold tracking-[-0.01em] max-w-[22ch] text-section" id="reviews-title">Маленькі кроки — помітний результат</h2>
+            <p class="max-w-[34rem] text-ink-muted">Як люди планують заощадження з «Потоком монет».</p>
+            <p class="text-xs text-ink-muted">Приклади відгуків для макета: імена та історії вигадані.</p>
+          </header>
+
+          <div class="swiper reviews-swiper w-full">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide !h-auto">
+                <figure class="flex h-full flex-col gap-6 rounded-2xl border border-white/10 bg-inset p-7 transition-colors duration-300 hover:border-accent/35">
+                  <p class="flex gap-1 text-sm text-amber-300" role="img" aria-label="Оцінка 5 з 5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                  <blockquote class="flex-1 text-ink/90"><p>«Побачила, що 1 500 ₴ на місяць — це відпустка вже наступного літа. Повзунок пояснює краще за будь-яку таблицю.»</p></blockquote>
+                  <figcaption class="flex items-center gap-4">
+                    <span class="grid size-12 flex-none place-items-center rounded-full bg-gradient-to-br from-accent to-sky-400 font-heading text-sm font-semibold text-ink-onaccent" aria-hidden="true">ІК</span>
+                    <span class="flex flex-col"><span class="font-semibold">Ірина К.</span><span class="text-xs text-ink-muted">дизайнерка · відкладає на відпустку</span></span>
+                  </figcaption>
+                </figure>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <figure class="flex h-full flex-col gap-6 rounded-2xl border border-white/10 bg-inset p-7 transition-colors duration-300 hover:border-accent/35">
+                  <p class="flex gap-1 text-sm text-amber-300" role="img" aria-label="Оцінка 5 з 5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                  <blockquote class="flex-1 text-ink/90"><p>«Поставили з дружиною по 3 000 ₴ на 24 місяці — і вперше маємо зрозумілий план, а не «колись відкладемо».»</p></blockquote>
+                  <figcaption class="flex items-center gap-4">
+                    <span class="grid size-12 flex-none place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 font-heading text-sm font-semibold text-ink-onaccent" aria-hidden="true">АМ</span>
+                    <span class="flex flex-col"><span class="font-semibold">Андрій М.</span><span class="text-xs text-ink-muted">інженер · подушка безпеки</span></span>
+                  </figcaption>
+                </figure>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <figure class="flex h-full flex-col gap-6 rounded-2xl border border-white/10 bg-inset p-7 transition-colors duration-300 hover:border-accent/35">
+                  <p class="flex gap-1 text-sm text-amber-300" role="img" aria-label="Оцінка 5 з 5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                  <blockquote class="flex-1 text-ink/90"><p>«Відкладаю по 500 ₴ зі стипендії. Рядок «… ₴ на день» чудово мотивує не купувати зайву каву.»</p></blockquote>
+                  <figcaption class="flex items-center gap-4">
+                    <span class="grid size-12 flex-none place-items-center rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-500 font-heading text-sm font-semibold text-ink-onaccent" aria-hidden="true">СЛ</span>
+                    <span class="flex flex-col"><span class="font-semibold">Софія Л.</span><span class="text-xs text-ink-muted">студентка · новий ноутбук</span></span>
+                  </figcaption>
+                </figure>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <figure class="flex h-full flex-col gap-6 rounded-2xl border border-white/10 bg-inset p-7 transition-colors duration-300 hover:border-accent/35">
+                  <p class="flex gap-1 text-sm text-amber-300" role="img" aria-label="Оцінка 4 з 5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star text-ink-muted/50"></i></p>
+                  <blockquote class="flex-1 text-ink/90"><p>«Подобається, що без реєстрації й без картки: покрутив повзунок і одразу зрозумів масштаб. Чекаю на мобільний застосунок.»</p></blockquote>
+                  <figcaption class="flex items-center gap-4">
+                    <span class="grid size-12 flex-none place-items-center rounded-full bg-gradient-to-br from-amber-300 to-orange-500 font-heading text-sm font-semibold text-ink-onaccent" aria-hidden="true">ОТ</span>
+                    <span class="flex flex-col"><span class="font-semibold">Олег Т.</span><span class="text-xs text-ink-muted">підприємець · ремонт</span></span>
+                  </figcaption>
+                </figure>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <figure class="flex h-full flex-col gap-6 rounded-2xl border border-white/10 bg-inset p-7 transition-colors duration-300 hover:border-accent/35">
+                  <p class="flex gap-1 text-sm text-amber-300" role="img" aria-label="Оцінка 5 з 5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                  <blockquote class="flex-1 text-ink/90"><p>«Курси НБУ поруч із сумою — зручно бачити, скільки це буде в злотих, ще до того, як купувати квитки.»</p></blockquote>
+                  <figcaption class="flex items-center gap-4">
+                    <span class="grid size-12 flex-none place-items-center rounded-full bg-gradient-to-br from-rose-400 to-pink-600 font-heading text-sm font-semibold text-ink-onaccent" aria-hidden="true">МВ</span>
+                    <span class="flex flex-col"><span class="font-semibold">Марта В.</span><span class="text-xs text-ink-muted">вчителька · поїздка до Польщі</span></span>
+                  </figcaption>
+                </figure>
+              </div>
+              <div class="swiper-slide !h-auto">
+                <figure class="flex h-full flex-col gap-6 rounded-2xl border border-white/10 bg-inset p-7 transition-colors duration-300 hover:border-accent/35">
+                  <p class="flex gap-1 text-sm text-amber-300" role="img" aria-label="Оцінка 5 з 5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                  <blockquote class="flex-1 text-ink/90"><p>«Чесно написано, що відсотки не враховуються. Простий інструмент, який не обіцяє зайвого, — тому й довіряю.»</p></blockquote>
+                  <figcaption class="flex items-center gap-4">
+                    <span class="grid size-12 flex-none place-items-center rounded-full bg-gradient-to-br from-cyan-300 to-blue-500 font-heading text-sm font-semibold text-ink-onaccent" aria-hidden="true">ТГ</span>
+                    <span class="flex flex-col"><span class="font-semibold">Тарас Г.</span><span class="text-xs text-ink-muted">розробник · навчання</span></span>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <!-- Навігація винесена за межі .swiper і передана в конфігурацію через селектори -->
+          <div class="flex items-center justify-center gap-6">
+            <button class="reviews-prev grid size-11 cursor-pointer place-items-center rounded-full border border-white/15 bg-white/5 text-ink transition hover:border-accent hover:text-accent focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" type="button"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+            <div class="reviews-pagination !static !w-auto flex items-center gap-1"></div>
+            <button class="reviews-next grid size-11 cursor-pointer place-items-center rounded-full border border-white/15 bg-white/5 text-ink transition hover:border-accent hover:text-accent focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" type="button"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+          </div>
         </div>
       </section>
 
@@ -778,9 +942,11 @@
           <ul class="flex flex-col gap-2">
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#symuliator">Симулятор</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#yak-tse-pratsiuie">Як це працює</a></li>
+            <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#galereia">Галерея</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#video">Відео</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#perevahy">Переваги</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#kursy">Курси валют</a></li>
+            <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#vidguky">Відгуки</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#zapytannia">Запитання</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#zvorotnyi-zviazok">Зворотний зв’язок</a></li>
           </ul>
@@ -807,5 +973,12 @@
         </div>
       </div>
     </footer>
+
+    <!-- ЛР №10: JS-бібліотеки (Vanilla JS, без jQuery) через CDN — у кінці <body>, щоб не блокувати рендер сторінки -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <!-- Об'єкти конфігурації та ініціалізація плагінів -->
+    <script src="js/plugins.js"></script>
   </body>
 </html>
