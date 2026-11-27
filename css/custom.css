@@ -207,3 +207,47 @@ details[open] > .faq-question::after {
     mask-image: linear-gradient(to bottom, transparent 5%, #000 55%);
   }
 }
+
+/* ---------- ЛР №10: тема плагінів під дизайн-систему «Потік монет» ---------- */
+
+/* Swiper: кольори пагінації через CSS-змінні бібліотеки */
+.reviews-section {
+  --swiper-theme-color: #00f5c4;
+  --swiper-pagination-color: #00f5c4;
+  --swiper-pagination-bullet-inactive-color: #94a3b8;
+  --swiper-pagination-bullet-inactive-opacity: 0.4;
+  --swiper-pagination-bullet-size: 10px;
+  --swiper-pagination-bullet-horizontal-gap: 5px;
+}
+/* активна «крапка» розтягується в доріжку — видно, де ти зараз */
+.reviews-section .swiper-pagination-bullet {
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+.reviews-section .swiper-pagination-bullet-active {
+  width: 28px;
+  border-radius: 999px;
+}
+.reviews-section .swiper-pagination-bullet:focus-visible {
+  outline: 3px solid #00f5c4;
+  outline-offset: 3px;
+}
+.reviews-prev.swiper-button-disabled,
+.reviews-next.swiper-button-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Typed.js: курсор у кольорі акценту */
+.typed-cursor {
+  color: #00f5c4;
+  font-weight: 400;
+}
+
+/* Fancybox: фон і акцент у стилі сайту */
+.fancybox__container {
+  --fancybox-bg: rgba(6, 16, 33, 0.94);
+  --fancybox-accent-color: #00f5c4;
+}
+.fancybox__caption {
+  font-family: Inter, system-ui, sans-serif;
+}
