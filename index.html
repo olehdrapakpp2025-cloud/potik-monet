@@ -364,6 +364,101 @@
       </section>
 
       <!-- КОМПОНЕНТ: Video (адаптивний YouTube-ембеддинг) -->
+      <!-- КОМПОНЕНТ: Калькулятор фінансової цілі (ЛР №11). Логіка й захист від Edge Cases — js/widget.js -->
+      <section class="pb-section" id="kalkuliator-tsili" aria-labelledby="goal-title">
+        <div class="mx-auto w-full max-w-page px-[clamp(1rem,0.4rem+3vw,2rem)] flex flex-col gap-10">
+          <header class="flex flex-col items-start gap-4">
+            <p class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent before:size-[0.4rem] before:flex-none before:rounded-full before:bg-accent before:content-['']">Калькулятор цілі</p>
+            <h2 class="font-heading font-semibold tracking-[-0.01em] max-w-[24ch] text-section max-md:max-w-none" id="goal-title">Коли ти досягнеш своєї цілі?</h2>
+            <p class="max-w-[40rem] text-ink-muted">Вкажи, скільки коштує ціль, скільки вже відкладено й скільки готовий відкладати щомісяця. Можна врахувати депозит: відсотки після податку 23% наблизять ціль.</p>
+          </header>
+
+          <div class="grid grid-cols-1 items-start gap-6 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]" data-goal-widget>
+            <form class="rounded-3xl border border-white/10 bg-inset p-[clamp(1.25rem,4vw,2.5rem)] shadow-card" id="goal-form" novalidate aria-label="Параметри фінансової цілі">
+              <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                <div class="flex flex-col gap-2">
+                  <label class="text-sm font-medium" for="goal-type">Ціль</label>
+                  <select class="block min-h-12 w-full rounded-xl border border-white/15 bg-page px-4 py-3 text-base text-ink transition-colors duration-150 hover:border-white/30 focus:outline-none focus-visible:border-accent focus-visible:ring-4 focus-visible:ring-accent/25 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer" id="goal-type" name="goal-type" aria-describedby="error-goal-type">
+                    <option value="vacation" data-preset="30000">Відпустка</option>
+                    <option value="laptop" data-preset="45000">Новий ноутбук</option>
+                    <option value="cushion" data-preset="60000">Подушка безпеки</option>
+                    <option value="education" data-preset="25000">Навчання</option>
+                    <option value="custom">Своя ціль</option>
+                  </select>
+                  <p class="hidden items-start gap-2 text-sm text-red-400" id="error-goal-type" aria-live="polite"></p>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <label class="text-sm font-medium" for="goal-amount">Вартість цілі, ₴</label>
+                  <input class="goal-field block min-h-12 w-full rounded-xl border border-white/15 bg-page px-4 py-3 text-base text-ink transition-colors duration-150 hover:border-white/30 focus:outline-none focus-visible:border-accent focus-visible:ring-4 focus-visible:ring-accent/25 disabled:cursor-not-allowed disabled:opacity-50" type="number" id="goal-amount" name="goal-amount" inputmode="numeric" min="1000" max="1000000" step="100" value="30000" required aria-describedby="hint-goal-amount error-goal-amount" aria-invalid="false" />
+                  <p class="text-xs text-ink-muted" id="hint-goal-amount">Від 1 000 до 1 000 000 ₴</p>
+                  <p class="hidden items-start gap-2 text-sm text-red-400" id="error-goal-amount" aria-live="polite"></p>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <label class="text-sm font-medium" for="goal-saved">Уже відкладено, ₴</label>
+                  <input class="goal-field block min-h-12 w-full rounded-xl border border-white/15 bg-page px-4 py-3 text-base text-ink transition-colors duration-150 hover:border-white/30 focus:outline-none focus-visible:border-accent focus-visible:ring-4 focus-visible:ring-accent/25 disabled:cursor-not-allowed disabled:opacity-50" type="number" id="goal-saved" name="goal-saved" inputmode="numeric" min="0" max="1000000" step="100" value="0" required aria-describedby="hint-goal-saved error-goal-saved" aria-invalid="false" />
+                  <p class="text-xs text-ink-muted" id="hint-goal-saved">0, якщо починаєш з нуля</p>
+                  <p class="hidden items-start gap-2 text-sm text-red-400" id="error-goal-saved" aria-live="polite"></p>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <label class="text-sm font-medium" for="goal-monthly">Відкладаю щомісяця, ₴</label>
+                  <input class="goal-field block min-h-12 w-full rounded-xl border border-white/15 bg-page px-4 py-3 text-base text-ink transition-colors duration-150 hover:border-white/30 focus:outline-none focus-visible:border-accent focus-visible:ring-4 focus-visible:ring-accent/25 disabled:cursor-not-allowed disabled:opacity-50" type="number" id="goal-monthly" name="goal-monthly" inputmode="numeric" min="100" max="200000" step="100" value="2000" required aria-describedby="hint-goal-monthly error-goal-monthly" aria-invalid="false" />
+                  <div class="flex flex-wrap gap-2" role="group" aria-label="Швидкий вибір внеску">
+                    <button class="cursor-pointer rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-ink-muted transition-colors duration-150 hover:border-accent/50 hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" type="button" data-monthly="500">500</button>
+                    <button class="cursor-pointer rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-ink-muted transition-colors duration-150 hover:border-accent/50 hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" type="button" data-monthly="1000">1 000</button>
+                    <button class="cursor-pointer rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-ink-muted transition-colors duration-150 hover:border-accent/50 hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" type="button" data-monthly="2000">2 000</button>
+                    <button class="cursor-pointer rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-ink-muted transition-colors duration-150 hover:border-accent/50 hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" type="button" data-monthly="5000">5 000</button>
+                  </div>
+                  <p class="sr-only" id="hint-goal-monthly">Від 100 до 200 000 ₴ на місяць</p>
+                  <p class="hidden items-start gap-2 text-sm text-red-400" id="error-goal-monthly" aria-live="polite"></p>
+                </div>
+
+                <div class="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:col-span-2">
+                  <div class="flex items-start gap-3">
+                    <input class="mt-0.5 size-5 flex-none cursor-pointer accent-[#00F5C4] focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/40" type="checkbox" id="goal-deposit" name="goal-deposit" aria-controls="goal-rate" />
+                    <label class="cursor-pointer text-sm" for="goal-deposit">Тримати заощадження на депозиті <span class="block text-xs text-ink-muted">Щомісячна капіталізація, податок 23% (18% ПДФО + 5% військовий збір) уже враховано</span></label>
+                  </div>
+                  <div class="flex flex-col gap-2 sm:max-w-xs">
+                    <label class="text-sm font-medium" for="goal-rate">Ставка, % річних</label>
+                    <select class="block min-h-12 w-full rounded-xl border border-white/15 bg-page px-4 py-3 text-base text-ink transition-colors duration-150 hover:border-white/30 focus:outline-none focus-visible:border-accent focus-visible:ring-4 focus-visible:ring-accent/25 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer" id="goal-rate" name="goal-rate" disabled aria-describedby="error-goal-rate">
+                      <option value="8">8%</option>
+                      <option value="10">10%</option>
+                      <option value="12" selected>12%</option>
+                      <option value="14">14%</option>
+                    </select>
+                    <p class="hidden items-start gap-2 text-sm text-red-400" id="error-goal-rate" aria-live="polite"></p>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <!-- Результат: aria-live озвучує зміни, не перехоплюючи фокус -->
+            <aside class="flex flex-col gap-5 rounded-3xl border border-accent/35 bg-white/5 p-[clamp(1.25rem,4vw,2rem)] shadow-card md:sticky md:top-24" aria-labelledby="goal-result-title">
+              <h3 class="text-sm font-medium uppercase tracking-[0.08em] text-ink-muted" id="goal-result-title">Твій план</h3>
+              <div aria-live="polite" aria-atomic="true">
+                <p class="font-heading text-figure font-semibold leading-none text-accent break-words" id="goal-months">15 місяців</p>
+                <p class="mt-2 text-sm text-ink-muted" id="goal-date">Розрахунок з’явиться після введення даних</p>
+              </div>
+              <div>
+                <div class="h-2.5 overflow-hidden rounded-full bg-white/10" role="progressbar" aria-label="Уже відкладено від вартості цілі" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="goal-progress">
+                  <div class="h-full w-0 rounded-full bg-accent transition-[width] duration-300" id="goal-progress-bar"></div>
+                </div>
+                <p class="mt-2 text-xs text-ink-muted" id="goal-progress-text">Відкладено 0% від цілі</p>
+              </div>
+              <dl class="flex flex-col gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-ink-muted">Твої внески</dt><dd class="font-semibold tabular-nums" id="goal-contrib">30 000 ₴</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-ink-muted">Дохід депозиту</dt><dd class="font-semibold tabular-nums" id="goal-interest">0 ₴</dd></div>
+                <div class="flex justify-between gap-4 border-t border-white/10 pt-2"><dt class="text-ink-muted">Накопичиш</dt><dd class="font-semibold tabular-nums" id="goal-total">30 000 ₴</dd></div>
+              </dl>
+              <p class="rounded-xl bg-accent/10 px-4 py-3 text-sm" id="goal-tip">Щоб встигнути за 12 місяців, відкладай 2 500 ₴ на місяць.</p>
+              <p class="text-xs text-ink-muted">Розрахунок орієнтовний: ставка не змінюється, внесок — у кінці місяця.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
       <!-- КОМПОНЕНТ: Галерея інтерфейсу (ЛР №10, Fancybox v5). Усі посилання з data-fancybox="potik-gallery" — один альбом -->
       <section class="pb-section" id="galereia" aria-labelledby="gallery-title">
         <div class="mx-auto w-full max-w-page px-[clamp(1rem,0.4rem+3vw,2rem)] flex flex-col gap-10">
@@ -942,6 +1037,7 @@
           <ul class="flex flex-col gap-2">
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#symuliator">Симулятор</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#yak-tse-pratsiuie">Як це працює</a></li>
+            <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#kalkuliator-tsili">Калькулятор цілі</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#galereia">Галерея</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#video">Відео</a></li>
             <li><a class="text-sm transition-colors duration-150 hover:text-accent" href="#perevahy">Переваги</a></li>
@@ -980,5 +1076,7 @@
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
     <!-- Об'єкти конфігурації та ініціалізація плагінів -->
     <script src="js/plugins.js"></script>
+    <!-- ЛР №11: інтерактивний віджет «Калькулятор цілі» -->
+    <script src="js/widget.js"></script>
   </body>
 </html>
